@@ -1,0 +1,10 @@
+to check the js file syntax error and others 
+
+node --check filename.js
+
+to check the python file
+
+python filename.py
+
+
+
