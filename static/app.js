@@ -1,5 +1,5 @@
 const wsProtocol = location.protocol === "https:" ? "wss" : "ws";
-const ws = new WebSocket(`${wsProtocol}://${location.host}/ws`);
+const ws = new WebSocket(`${wsProtocol}://${window.location.host}/ws`);
 
 const localVideo = document.getElementById("localVideo");
 const remoteVideo = document.getElementById("remoteVideo");
@@ -60,15 +60,23 @@ startButton.onclick = async () => {
     await initMedia();
     createPeer();
 
-    const offer = await pc.createOffer();
-    await pc.setLocalDescription(offer);
+        ws.onopen = async () => {
+        const offer = await pc.createOffer();
+        await pc.setLocalDescription(offer);
+        ws.send(JSON.stringify({ type: "offer", offer }));
+    };
 
-    ws.send(JSON.stringify({ type: "offer", offer
-    }));
+    // If ws is already open
+    if (ws.readyState === WebSocket.OPEN) {
+        const offer = await pc.createOffer();
+        await pc.setLocalDescription(offer);
+        ws.send(JSON.stringify({ type: "offer", offer }));
+    }
 };
 
 nextButton.onclick = () => {
     if (pc) pc.close();
     remoteVideo.srcObject = null;
 };
+
 
