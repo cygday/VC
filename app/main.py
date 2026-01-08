@@ -19,7 +19,7 @@ clients = {}
 @app.websocket("/ws")
 async def ws_endpoint(ws: WebSocket):
     await ws.accept()
-    global waiting
+    global waiting, pairs
     user_id = str(uuid.uuid4())
     clients
     
@@ -42,7 +42,10 @@ async def ws_endpoint(ws: WebSocket):
                 await pairs[ws].send_text(msg)
     except WebSocketDisconnect:
         if ws in pairs:
-            await pairs[ws].close()
+            try:
+                await pairs[ws].close()
+            except Exception:
+                pass
             del pairs[pairs[ws]]
             del pairs[ws]
         if waiting == ws:
