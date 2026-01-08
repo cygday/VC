@@ -1,3 +1,15 @@
+document.addEventListener("DOMContentLoaded", () => {
+    const overlay = document.getElementById("age-overlay");
+    const appDiv = document.querySelector(".app");
+    const confirmBtn = document.getElementById("age-confirm-btn");
+
+    confirmBtn.onclick = () => {
+        overlay.style.display = "none";
+        appDiv.style.display = "";
+    };
+});
+
+
 const wsProtocol = location.protocol === "https:" ? "wss" : "ws";
 const ws = new WebSocket(`${wsProtocol}://${window.location.host}/ws`);
 
