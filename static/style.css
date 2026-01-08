@@ -38,8 +38,8 @@ video {
 }
 
 #remoteVideo, #localVideo {
-    width: 120px;
-    height: 160px;
+    width: 400px;
+    height: 400px;
     bottom: 10px;
     right: 10px;
     border-radius: 10px;
@@ -49,7 +49,7 @@ video {
 }
 .controls {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     position: absolute;
     right: 2vw;
     top: 50%;
@@ -80,7 +80,7 @@ button-active {
 #age-overlay {
     background:
      linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)),
-     url('/static/wallpaper.png') center center/cover no-repeat;
+     url('wallpaper.png') center center/cover no-repeat;
     color: #fff;
     position: fixed;
     top: 0; left: 0; width: 100vw; height: 100vh;
