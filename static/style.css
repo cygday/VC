@@ -78,9 +78,12 @@ button-active {
 }
 
 #age-overlay {
-    background:
-     linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)),
-     url('wallpaper.png') center center/cover no-repeat;
+    background-image: url('/static/wallpaper.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height:500px;
+    width: 100%;
     color: #fff;
     position: fixed;
     top: 0; left: 0; width: 100vw; height: 100vh;
