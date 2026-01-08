@@ -1,0 +1,75 @@
+const wsProtocol = location.protocol === "https:" ? "wss" : "ws";
+const ws = new WebSocket(`${wsProtocol}://${location.host}/ws`);
+
+const localVideo = document.getElementById("localVideo");
+const remoteVideo = document.getElementById("remoteVideo");
+const startButton = document.getElementById("startBtn");
+const callButton = document.getElementById("nextBtn");
+
+let pc;
+let localStream;
+
+const iceConfig = {
+    iceServers: [
+        { urls: "stun:stun.l.google.com:19302" }
+    ]
+};
+
+async function initMedia() {
+    localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+
+    localVideo.srcObject = localStream;
+}
+
+function createPeer() {
+    pc = new RTCPeerConnection(iceConfig);
+    localStream.getTracks().forEach(track => { pc.addTrack(track, localStream);
+    });
+
+    pc.ontrack = e => {
+        remoteVideo.srcObject = e.streams[0];
+    };
+    pc.onicecandidate = e => {
+        if (e.candidate) {
+            ws.send(JSON.stringify({ type: "ice", candidate: e.candidate }));
+        }
+};
+}
+
+ws.onmessage = async (event) => {
+    const msg = JSON.parse(event.data);
+
+    if (msg.type === "offer") {
+        await 
+        pc.setRemoteDescription(msg.offer);
+        const answer = await pc.createAnswer();
+        await pc.setLocalDescription(answer);
+        ws.send(JSON.stringify({ type: "answer", answer
+        }));
+    }
+
+    if (msg.type === "answer") {
+        await pc.setRemoteDescription(msg.answer);
+    }
+    if (msg.type === "ice") {
+        await pc.addIceCandidate(msg.candidate);
+    }
+};
+
+startButton.onclick = async () => {
+    await initMedia();
+    createPeer();
+
+    const offer = await pc.createOffer();
+    await pc.setLocalDescription(offer);
+
+    ws.send(JSON.stringify({ type: "offer", offer
+    }));
+};
+
+nextButton.onclick = () => {
+    if (pc) pc.close();
+    remoteVideo.srcObject = null;
+};
+
+
