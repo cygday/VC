@@ -1,10 +1,16 @@
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 import json
 import uuid
+import os
 
 app = FastAPI()
-app.mount("/", StaticFiles(directory="static", html=True), name="static")
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
+@app.get("/")
+async def root():
+    return FileResponse(os.path.join("static", "index.html"))
 
 waiting = None
 pairs = {}
