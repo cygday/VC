@@ -15,6 +15,7 @@ body {
     display: flex;
     flex-direction: column;
     height: 100vh;
+    text-align: center;
 }
 header {
     text-align: center;
@@ -22,10 +23,20 @@ header {
     background: #140603;
 }
 .video-container {
-    flex: 1;
-    position: relative;
-    background: black;
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    gap: 20px;
+    margin-top: 40px;
 }
+video {
+    width:400px;
+    height: 300px;
+    background: #222;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+}
+
 #remoteVideo {
     width: 100%;
     height: 100%;
@@ -44,18 +55,42 @@ header {
 }
 .controls {
     display: flex;
-    gap: 10px;
-    padding: 12px;
-    background: #C45841;
+    flex-direction: column;
+    position: absolute;
+    right: 2vw;
+    top: 50%;
+    transform: translateY(-50%);
+    gap: 20px;
+    
 }
+
+
 button {
-    flex: 1;
-    padding: 12px;
-    font-size: 16px;
+    padding: 16px 32px;
+    font-size: 1.2em;
+    border-radius: 8px;
+    border:none;
     background: #8A276F;
     color:white;
-    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
 }
+button:hover {
+    background: #0056b3;
+}
+
 button-active {
     background: #A690A0;
+}
+
+#age-overlay {
+    background: url('/static/wallpaper.png') center center/cover no-repeat, rgba(0,0,0,0.85);
+    color: #fff;
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
 }
