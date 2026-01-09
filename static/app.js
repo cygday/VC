@@ -126,3 +126,17 @@ function nextUser() {
 callButton.onclick = () => {
     nextUser();
 }
+
+let startY = 0;
+let endY = 0;
+
+document.addEventListener("touchstart", e => {
+    startY = e.touches[0].clientY;
+});
+
+document.addEventListener("touchend", e => {
+    endY = e.changedTouches[0].clientY;
+    if (startY - endY > 80) {
+        nextUser();
+    }
+});
