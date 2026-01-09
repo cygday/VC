@@ -18,6 +18,20 @@ const remoteVideo = document.getElementById("remoteVideo");
 const startButton = document.getElementById("startBtn");
 const callButton = document.getElementById("nextBtn");
 
+
+const constraints = {
+    video: {
+        facingMode: "user",
+        width: { ideal: 720 },
+
+        height: { ideal: 1280 }
+},
+    audio: true
+};
+
+navigator.mediaDevices.getUserMedia(constraints)
+
+
 let pc;
 let localStream;
 
