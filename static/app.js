@@ -106,3 +106,20 @@ nextButton.onclick = () => {
 };
 
 
+function nextUser() {
+    if (pc) {
+        pc.ontrack = null;
+        pc.onicecandidate = null;
+        pc.close();
+        pc = null;
+    }
+    remoteVideo.srcObject = null;
+    
+    createPeer();
+    pc.createOffer().then(offer => pc.setLocalDescription(offer)).then(() => {
+        ws.send(JSON.stringify({
+            type: "offer",
+            offer: pc.localDescription
+        }));
+        });
+    }
