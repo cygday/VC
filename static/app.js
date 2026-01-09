@@ -80,6 +80,23 @@ ws.onmessage = async (event) => {
     if (msg.type === "ice") {
         await pc.addIceCandidate(msg.candidate);
     }
+    if (msg.type === "matched"){
+        await initMedia();
+        createPeer();
+
+        if (msg.role === "offer"){
+            const offer = await pc.createOffer();
+            await pc.setLocalDescription(offer);
+
+            ws.send(JSON.stringify({
+                type: "offer",
+                offer
+
+            }));
+        }
+        return;
+    }
+    
 };
 
 startButton.onclick = async () => {
@@ -114,7 +131,8 @@ function nextUser() {
         pc = null;
     }
     remoteVideo.srcObject = null;
-    
+    ws.send(JSON.stringify({ type: "next" }));
+
     createPeer();
     pc.createOffer().then(offer => pc.setLocalDescription(offer)).then(() => {
         ws.send(JSON.stringify({
