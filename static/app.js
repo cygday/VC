@@ -100,7 +100,7 @@ startButton.onclick = async () => {
     }
 };
 
-nextButton.onclick = () => {
+callButton.onclick = () => {
     if (pc) pc.close();
     remoteVideo.srcObject = null;
 };
@@ -123,3 +123,6 @@ function nextUser() {
         }));
         });
     }
+callButton.onclick = () => {
+    nextUser();
+}
