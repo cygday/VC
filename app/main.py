@@ -6,7 +6,7 @@ import uuid
 import os
 
 app = FastAPI()
-app.mount("/static", StaticFiles(directory="static"), name="static")
+app.mount("/", StaticFiles(directory="static", html=True), name="static")
 
 @app.get("/")
 async def root():
@@ -63,3 +63,22 @@ async def ws_endpoint(ws: WebSocket):
                 }))
     except WebSocketDisconnect:
         clients.pop(user_id, None)
+        
+async def try_match(user_id):
+    if waiting_users:
+        partner_id = waiting_users.pop(0)
+        
+        pairs[user_id] = partner_id
+        pairs[partner_id] = user_id
+        
+        await clients[user_id].send_json({
+            "type": "matched",
+            "role": "offer"
+        })
+        
+        await clients[parttner_id].send_json({
+            "type": "matched",
+            "role": "answer"
+            })
+    else:
+        waiting_users.append(user_id)
