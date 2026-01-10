@@ -11,7 +11,7 @@ body {
     height: 100vh;
 }
 
-.app {
+/*.app {
     display: flex;
     flex-direction: column;
     height: 100vh;
@@ -50,10 +50,10 @@ video {
 #localVideo {
     max-width:30%;
 }
-
+*/
 /* mobile fix */
 
-@media (max-width: 768px) {
+/*@media (max-width: 768px) {
     .video-container {
         flex-direction: column;
     }
@@ -99,6 +99,7 @@ button:hover {
 button-active {
     background: #A690A0;
 }
+*/
 
 #age-overlay {
     background-image: url('/static/wallpaper.png');
@@ -117,9 +118,9 @@ button-active {
     z-index: 1000;
 }
 
-.hint {
+/*.hint {
     text-align:center;
     font-size: 12px;
     opacity: 0.6;
     padding-bottom:6px;
-}
+}*/
