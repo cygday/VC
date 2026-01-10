@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-const wsProtocol = location.protocol === "https:" ? "wss" : "ws";
+/*const wsProtocol = location.protocol === "https:" ? "wss" : "ws";
 const ws = new WebSocket(`${wsProtocol}://${window.location.host}/ws`);
 
 const localVideo = document.getElementById("localVideo");
@@ -157,4 +157,4 @@ document.addEventListener("touchend", e => {
     if (startY - endY > 80) {
         nextUser();
     }
-});
+});*/
